@@ -1,0 +1,43 @@
+﻿<Page x:Class="ClearLogCreator.Pages.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ClearLogCreator.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MainPage" Style="{StaticResource PageStyle}">
+
+    <Page.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource StandartButtonStyle}">
+            <Setter Property="Height" Value="80"/>
+            <Setter Property="MaxWidth" Value="600"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"
+            FontWeight="Bold" FontSize="30" Text="Главное меню"/>
+
+        <Grid Grid.Row="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Row="0" Content="Мои лог-файлы"
+                    VerticalAlignment="Bottom" Name="BtnMyLogFiles" Click="BtnMyLogFiles_Click"/>
+            <Button Grid.Row="1" Content="Настройки"
+                    Name="BtnSettings" Click="BtnSettings_Click"/>
+            <Button Grid.Row="2" Content="Выйти"
+                    VerticalAlignment="Top" Name="BtnExit" Click="BtnExit_Click"/>
+        </Grid>
+    </Grid>
+</Page>

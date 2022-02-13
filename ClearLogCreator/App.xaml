@@ -1,0 +1,38 @@
+﻿<Application x:Class="ClearLogCreator.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ClearLogCreator"
+             StartupUri="Windows/MainWindow.xaml">
+    <Application.Resources>
+        <Style x:Key="MainColor">
+            <Setter Property="ItemsControl.Background" Value="#FFF0871F"/>
+        </Style>
+        
+        <Style x:Key="SecondColor">
+            <Setter Property="ItemsControl.Background" Value="#FFEE9D4D"/>
+        </Style>
+
+        <Style x:Key="ThirdColor">
+            <Setter Property="ItemsControl.Background" Value="#FFF0B67C"/>
+        </Style>
+
+        <Style x:Key="WindowStyle" TargetType="Window" BasedOn="{StaticResource MainColor}">
+            <Setter Property="FontFamily" Value="Arial"/>
+        </Style>
+
+        <Style x:Key="PageStyle" TargetType="Page" BasedOn="{StaticResource SecondColor}">
+            <Setter Property="FontFamily" Value="Arial"/>
+        </Style>
+
+        <Style x:Key="StandartButtonStyle" TargetType="Button" BasedOn="{StaticResource MainColor}">
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="StandartTextBoxStyle" TargetType="TextBox">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </Application.Resources>
+</Application>
