@@ -85,9 +85,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\.Global\MainWindowApp.cs" />
+    <Compile Include="Classes\Global\MainWindowApp.cs" />
     <Compile Include="Classes\User\User.cs" />
-    <Compile Include="Classes\FileWorker.cs" />
     <Compile Include="Classes\User\UserSettings.cs" />
     <Compile Include="Classes\LogWorker.cs" />
     <Compile Include="Classes\LogFile.cs" />

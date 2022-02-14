@@ -2,6 +2,7 @@
 using ClearLogCreator.Classes.User;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,15 +30,46 @@ namespace ClearLogCreator.Pages
 
         private void BtnMyLogFiles_Click(object sender, RoutedEventArgs e)
         {
+            bool trueSettings = true;
+
             if (String.IsNullOrEmpty(User.UserSettings.MinecraftLogsFolder) || 
                 String.IsNullOrEmpty(User.UserSettings.MyLogsFolder))
             {
                 MessageBox.Show("Настройки пользователя не установлены. Заполните все пустые поля в меню настроек.",
                     "Настройки не установлены", MessageBoxButton.OK, MessageBoxImage.Warning);
-                NavigationService.Navigate(new SettingsPage());
+                trueSettings = false;
             }
-            else
-                NavigationService.Navigate(new SelectLogPage());
+
+            if (trueSettings)
+            try
+            {
+                string[] files = Directory.GetFiles(User.UserSettings.MinecraftLogsFolder);
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось обратиться к папке майнкрафта. Вероятнее всего, " +
+                    "указанной папки не существует. Укажите другую папку.", "Ошибка лог-папки майнкрафта",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                User.UserSettings.MinecraftLogsFolder = null;
+                trueSettings = false;
+            }
+
+            if (trueSettings)
+            try
+            {
+                string[] files = Directory.GetFiles(User.UserSettings.MyLogsFolder);
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось обратиться к вашей личной папке. Вероятнее всего, " +
+                    "указанной папки не существует. Укажите другую папку.", "Ошибка личной лог-папки",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                User.UserSettings.MyLogsFolder = null;
+                trueSettings = false;
+            }
+
+            if (trueSettings) NavigationService.Navigate(new SelectLogPage());
+            else NavigationService.Navigate(new SettingsPage());
         }
 
         private void BtnSettings_Click(object sender, RoutedEventArgs e)

@@ -24,23 +24,49 @@ namespace ClearLogCreator.Pages
     public partial class ShowClearLogPage : Page
     {
         private string[] _lines;
+        private string _fileSource;
         public ShowClearLogPage(string fileSource)
         {
-            InitializeComponent();
-            SetLinesFromFile(fileSource);
-            CreatePlayerList();
+            _fileSource = fileSource;
 
+            InitializeComponent();
+            CreateEncodingList();
+
+            SetLinesFromFile();
+            CreatePlayerList();
             ShowLogFileContent();
         }
 
-        private void SetLinesFromFile(string fileSource)
+        private void SetLinesFromFile()
         {
-            _lines = CustomTextReader.GetText(fileSource);
+            Encoding encoding = Encoding.Default;
+
+            switch(CbEncoding.SelectedIndex)
+            {
+                case 0: encoding = Encoding.Default; break;
+                case 1: encoding = Encoding.UTF8; break;
+                case 2: encoding = Encoding.ASCII; break;
+            }
+
+            _lines = CustomTextReader.GetText(_fileSource, encoding);
             _lines = LogWorker.GetChatLines(_lines);
+        }
+
+        private void CreateEncodingList()
+        {
+            CbEncoding.Items.Clear();
+
+            CbEncoding.Items.Add("Default");
+            CbEncoding.Items.Add("UTF-8");
+            CbEncoding.Items.Add("ASCII");
+
+            CbEncoding.SelectedIndex = 0;
         }
 
         private void CreatePlayerList()
         {
+            CbPlayers.Items.Clear();
+
             string[] linesCopy = _lines;
             List<string> players = new List<string>();
 
@@ -81,6 +107,12 @@ namespace ClearLogCreator.Pages
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void CbEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SetLinesFromFile();
+            ShowLogFileContent();
         }
     }
 }

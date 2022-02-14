@@ -22,8 +22,8 @@ namespace ClearLogCreator.Classes.User
                 UserSettings = new UserSettings();
                 UserSettings.MinecraftLogsFolder = 
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\.minecraft\logs";
-                UserSettings.DeleteUselessFilesInMinecraftFolder = false;
-                UserSettings.DeleteUselessFilesInMyFolder = false;
+                UserSettings.CopyFilesFromMinecraftFolder = true;
+                UserSettings.HideUselessFiles = false;
             }
         }
 

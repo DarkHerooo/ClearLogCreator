@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ClearLogCreator.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="400"
+      d:DesignHeight="450" d:DesignWidth="800"
       Title="ShowClearLogPage" Style="{StaticResource PageStyle}">
 
     <Grid>
@@ -31,6 +31,21 @@
             <ComboBox Grid.Column="1" Margin="10, 0, 0, 0" Name="CbPlayers"
                       FontSize="20" VerticalContentAlignment="Center"
                       SelectionChanged="CbPlayers_SelectionChanged"/>
+        </Grid>
+
+        <Grid Grid.Row="1" HorizontalAlignment="Left" MinWidth="300" MaxWidth="500"
+              Margin="0, 5, 0, 5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20"
+                       FontWeight="Bold" Text="Кодировка:"/>
+
+            <ComboBox Grid.Column="1" Margin="10, 0, 0, 0" Name="CbEncoding"
+                      FontSize="20" VerticalContentAlignment="Center"
+                      SelectionChanged="CbEncoding_SelectionChanged"/>
         </Grid>
 
         <Button Grid.Row="2" Content="Назад" Margin="0, 5, 0, 5" Style="{StaticResource StandartButtonStyle}"

@@ -11,7 +11,7 @@ namespace ClearLogCreator.Classes.User
     {
         public string MinecraftLogsFolder;
         public string MyLogsFolder;
-        public bool DeleteUselessFilesInMinecraftFolder;
-        public bool DeleteUselessFilesInMyFolder;
+        public bool CopyFilesFromMinecraftFolder;
+        public bool HideUselessFiles;
     }
 }

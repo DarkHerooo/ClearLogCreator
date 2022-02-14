@@ -63,24 +63,24 @@
             <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0, 20, 0, 0">
                 <TextBlock Grid.Row="0" FontSize="20" VerticalAlignment="Center"
                            TextWrapping="Wrap" HorizontalAlignment="Center">
-                    <Run Text="Папка лог-файлов майнкрафта -" FontWeight="Bold"/>
-                    <Run Text="папка, из которой автоматически копируются файлы."/>
+                    <Run Text="Папка лог-файлов майнкрафта:" FontWeight="Bold"/>
+                    <Run Text="папка, в которой хранятся лог-файлы майнкрафта (задаётся автоматически)"/>
                 </TextBlock>
 
                 <TextBlock Grid.Row="1" FontSize="20" VerticalAlignment="Center"
                            TextWrapping="Wrap" HorizontalAlignment="Center">
-                    <Run Text="Личная папка лог-файлов -" FontWeight="Bold"/>
-                    <Run Text="папка, в которую копируются файлы и читаются оттуда же."/>
+                    <Run Text="Личная папка лог-файлов:" FontWeight="Bold"/>
+                    <Run Text="создайте или укажите папку, в которой будут храниться копии лог-файлов майнкрафта."/>
                 </TextBlock>
 
                 <CheckBox VerticalContentAlignment="Center" VerticalAlignment="Top"
-                          Content="Удалять ненужные и пустые файлы из папки майнкрафта" FontSize="20"
-                          Margin="0, 20, 0, 0" Name="ChbDeleteUselessFilesInMinecraftFolder"/>
+                          Content="Копировать новые файлы в личную папку" FontSize="20"
+                          Margin="0, 20, 0, 0" Name="ChbCopyFilesFromMinecraftFolder"/>
 
                 <CheckBox VerticalContentAlignment="Center" VerticalAlignment="Top"
-                          Content="Удалять ненужные и пустые файлы из личной папки" FontSize="20"
-                          Margin="0, 5, 0, 0" Name="ChbDeleteUselessFilesInMyFolder"/>
-               
+                          Content="Скрывать пустые файлы" FontSize="20"
+                          Margin="0, 5, 0, 0" Name="ChbHideUselessFiles"/>
+
             </StackPanel>
 
             <Grid Grid.Row="3">

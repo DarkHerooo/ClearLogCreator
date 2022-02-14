@@ -16,48 +16,51 @@ namespace ClearLogCreator.Pages
     {
         public SelectLogPage()
         {
-            PrepareLogFiles();
-
             InitializeComponent();
+
+            if (User.UserSettings.CopyFilesFromMinecraftFolder)
+                CopyNewFilesInFolder(User.UserSettings.MinecraftLogsFolder, User.UserSettings.MyLogsFolder);
+
             ShowLogFiles();
         }
 
         /// <summary>
-        /// Подготавливает лог-файлы к работе. 
-        /// Копирует новые лог-файлы из папки с майнкрафтом в личную папку.
-        /// Проверяет файлы в личной папке и предлагает удалить лишние.
+        /// Копирует новые файлы из одной папки в другую.
         /// </summary>
-        private void PrepareLogFiles()
+        /// <param name="oldFolderSource"></param>
+        /// <param name="newFolderSource"></param>
+        public static void CopyNewFilesInFolder(string oldFolderSource, string newFolderSource)
         {
-            if (User.UserSettings.DeleteUselessFilesInMinecraftFolder)
-            {
-                string[] files = LogWorker.GetUselessFilesInFolder(User.UserSettings.MinecraftLogsFolder);
-                if (files.Length > 0)
-                {
-                    MessageBoxResult result =
-                        MessageBox.Show("В папке лог-файлов майнкрафта найдено " + files.Length + " ненужных файлов\n" +
-                        "Удалить их?", "Удаление ненужных файлов", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+            string[] fileSourcesInOldFolder = Directory.GetFiles(oldFolderSource);
 
-                    if (result == MessageBoxResult.Yes)
-                        foreach (var file in files) File.Delete(file);
+            List<FileInfo> filesInOldFolder = new List<FileInfo>();
+            foreach (var fileInOldFolder in fileSourcesInOldFolder)
+                filesInOldFolder.Add(new FileInfo(fileInOldFolder));
+
+            string[] fileSourcesInNewFolder = Directory.GetFiles(newFolderSource);
+
+            List<FileInfo> filesInNewFolder = new List<FileInfo>();
+            foreach (var fileSourceInNewFolder in fileSourcesInNewFolder)
+                filesInNewFolder.Add(new FileInfo(fileSourceInNewFolder));
+
+            List<FileInfo> newFiles = new List<FileInfo>();
+            foreach (var fileInOldFolder in filesInOldFolder)
+            {
+                bool fileExists = false;
+                foreach (var fileInNewFolder in filesInNewFolder)
+                {
+                    if (fileInOldFolder.Name == fileInNewFolder.Name)
+                    {
+                        fileExists = true;
+                        break;
+                    }
                 }
+
+                if (!fileExists) newFiles.Add(fileInOldFolder);
             }
 
-            FileWorker.CopyNewFilesInFolder(User.UserSettings.MinecraftLogsFolder, User.UserSettings.MyLogsFolder);
-
-            if (User.UserSettings.DeleteUselessFilesInMyFolder)
-            {
-                string[] files = LogWorker.GetUselessFilesInFolder(User.UserSettings.MyLogsFolder);
-                if (files.Length > 0)
-                {
-                    MessageBoxResult result =
-                        MessageBox.Show("В личной папке лог-файлов найдено " + files.Length + " ненужных файлов\n" +
-                        "Удалить их?", "Удаление ненужных файлов", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
-
-                    if (result == MessageBoxResult.Yes)
-                        foreach (var file in files) File.Delete(file);
-                }
-            }
+            foreach (var newFile in newFiles)
+                newFile.CopyTo(newFolderSource + @"\" + newFile.Name);
         }
 
         /// <summary>
@@ -65,33 +68,14 @@ namespace ClearLogCreator.Pages
         /// </summary>
         private void ShowLogFiles()
         {
-            LogFile[] logFiles = GetLogFiles(User.UserSettings.MyLogsFolder);
+            string[] files;
+            if (User.UserSettings.HideUselessFiles)
+                files = LogWorker.GetUsefulFilesInFolder(User.UserSettings.MyLogsFolder);
+            else
+                files = Directory.GetFiles(User.UserSettings.MyLogsFolder);
+
+            LogFile[] logFiles = LogWorker.GetLogFiles(files);
             DgLogs.ItemsSource = logFiles;
-        }
-
-        /// <summary>
-        /// Получает все лог-файлы из указанной папки.
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        private LogFile[] GetLogFiles(string path)
-        {
-            string[] logFileSources = Directory.GetFiles(path);
-            List<LogFile> logFiles = new List<LogFile>();
-            foreach (var logFileSource in logFileSources)
-            {
-                FileInfo file = new FileInfo(logFileSource);
-                if (file.Extension == ".gz" || file.Extension == ".log")
-                {
-                    string name = file.Name;
-                    string createDate = file.LastWriteTime.ToString("D");
-                    string fileSource = logFileSource;
-                    LogFile logFile = new LogFile(name, createDate, fileSource);
-                    logFiles.Add(logFile);
-                }
-            }
-
-            return logFiles.ToArray();
         }
 
         /// <summary>

@@ -31,8 +31,8 @@ namespace ClearLogCreator.Pages
 
             TbMinecraftLogFolder.Text = User.UserSettings.MinecraftLogsFolder;
             TbMyLogFolder.Text = User.UserSettings.MyLogsFolder;
-            ChbDeleteUselessFilesInMinecraftFolder.IsChecked = User.UserSettings.DeleteUselessFilesInMinecraftFolder;
-            ChbDeleteUselessFilesInMyFolder.IsChecked = User.UserSettings.DeleteUselessFilesInMyFolder;
+            ChbCopyFilesFromMinecraftFolder.IsChecked = User.UserSettings.CopyFilesFromMinecraftFolder;
+            ChbHideUselessFiles.IsChecked = User.UserSettings.HideUselessFiles;
         }
 
         private void BtnMinecraftLogFolder_Click(object sender, RoutedEventArgs e)
@@ -75,9 +75,8 @@ namespace ClearLogCreator.Pages
         {
             User.UserSettings.MinecraftLogsFolder = TbMinecraftLogFolder.Text;
             User.UserSettings.MyLogsFolder = TbMyLogFolder.Text;
-            User.UserSettings.DeleteUselessFilesInMinecraftFolder = 
-                (bool)ChbDeleteUselessFilesInMinecraftFolder.IsChecked;
-            User.UserSettings.DeleteUselessFilesInMyFolder = (bool)ChbDeleteUselessFilesInMyFolder.IsChecked;
+            User.UserSettings.HideUselessFiles = (bool)ChbHideUselessFiles.IsChecked;
+            User.UserSettings.CopyFilesFromMinecraftFolder = (bool)ChbCopyFilesFromMinecraftFolder.IsChecked;
             User.SaveUser();
             NavigationService.GoBack();
         }

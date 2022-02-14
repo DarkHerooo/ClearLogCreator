@@ -10,19 +10,19 @@ namespace ClearLogCreator.Classes
 {
     public static class CustomTextReader
     {
-        public static string[] GetText(string fileSource)
+        public static string[] GetText(string fileSource, Encoding encoding)
         {
             FileInfo file = new FileInfo(fileSource);
 
             switch(file.Extension)
             {
-                case ".gz": return GetGZFileText(fileSource);
+                case ".gz": return GetGZFileText(fileSource, encoding);
             }
 
-            return GetDefaultFileText(fileSource);
+            return GetDefaultFileText(fileSource, encoding);
         }
 
-        private static string[] GetGZFileText(string fileSource)
+        private static string[] GetGZFileText(string fileSource, Encoding encoding)
         {
             FileStream compressedFileStream = File.Open(fileSource, FileMode.Open);
             GZipStream gZipStream = new GZipStream(compressedFileStream, CompressionMode.Decompress);
@@ -35,15 +35,15 @@ namespace ClearLogCreator.Classes
             gZipStream.Close();
             outputFileStream.Close();
 
-            string[] lines = File.ReadAllLines(tempFileName, Encoding.Default);
+            string[] lines = File.ReadAllLines(tempFileName, encoding);
             File.Delete(tempFileName);
 
             return lines;
         }
 
-        private static string[] GetDefaultFileText(string fileSource)
+        private static string[] GetDefaultFileText(string fileSource, Encoding encoding)
         {
-            string[] lines = File.ReadAllLines(fileSource, Encoding.UTF8);
+            string[] lines = File.ReadAllLines(fileSource, encoding);
             return lines;
         }
     }
